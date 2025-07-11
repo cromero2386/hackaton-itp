@@ -40,6 +40,26 @@ app.get('/api/validar-db', async (req, res) => {
   }
 });
 
+// Endpoint para obtener los atributos de productos
+app.get('/api/productos/atributos', async (req, res) => {
+  try {
+    const [rows] = await db.query('DESCRIBE productos');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Endpoint para obtener el listado de productos
+app.get('/api/productos', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM productos');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor backend escuchando en puerto ${PORT}`);
